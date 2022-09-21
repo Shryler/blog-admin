@@ -4,22 +4,25 @@ import { useParams } from 'react-router-dom';
 function AccountDetailScreen() {
 
     const { id } = useParams();
-    const [account, setAccount] = useState(null);
+    const [user, setUser] = useState(null);
 
     useEffect(() => {
-        fetch("http://blog.api/account/" + id)
+        fetch("http://blog.api/appuser/" + id, {
+            method: "POST",
+            body: JSON.stringify({with:['account', 'role']})
+        })
             .then(resp => resp.json())
             .then(json => {
-                setAccount(json);
+                setUser(json);
             });
     }, [id])
 
     return (
         <div>
-            <h1>Détail du mot-clé : {account?.login}</h1>
+            <h1>Détail de l'utilisateur : {user?.pseudo}</h1>
             <div className="container">
-                <h2>{account?.login}</h2>
-                <em>{account?.password}</em>
+                <b>Email : </b>{user?.account?.login} <br />
+                <b>Rôle : </b>{user?.role?.title}
             </div>
         </div>
     );
