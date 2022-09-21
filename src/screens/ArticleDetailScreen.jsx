@@ -9,7 +9,7 @@ function ArticleDetailScreen() {
     useEffect(() => {
         fetch("http://blog.api/article/" + id, {
             method: "POST",
-            body: JSON.stringify({with: ['appuser', 'theme']})
+            body: JSON.stringify({with: ['appuser', 'theme', 'image', 'comment']})
         })
             .then(resp => resp.json())
             .then(json => {
@@ -35,6 +35,16 @@ function ArticleDetailScreen() {
                 <p>{article?.content}</p>
                 <em>Publié le : {dateConverter(article?.created_at)}</em> par <b>{article?.appuser?.pseudo}</b>
                 <p>Thème : {article?.theme?.title}</p>
+                <img src={article?.image?.src} alt={article?.image?.src} />
+                <h3>Commentaires</h3>
+                {article?.comments_list.map(comment => {
+                            return (
+                                <div key={comment.Id_comment} className="commentaire">
+                                    <p>{comment.title}</p>
+                                    <em>Publié le {new Date(comment.created_at).toLocaleString()}</em>
+                                </div>
+                            );
+                        })}
             </div>
         </div>
     );

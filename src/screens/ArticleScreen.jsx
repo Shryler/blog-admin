@@ -18,7 +18,7 @@ function ArticleScreen() {
     useEffect(() => {
         fetch("http://blog.api/article/" + 0, {
             method: "POST",
-            body: JSON.stringify({with: ['appuser', 'theme']})
+            body: JSON.stringify({with: ['appuser', 'theme', 'image']})
         })
             .then(resp => resp.json())
             .then(json => {
