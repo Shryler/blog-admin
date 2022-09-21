@@ -7,17 +7,31 @@ function ThemeDetailScreen() {
     const [theme, setTheme] = useState(null);
 
     useEffect(() => {
-        fetch("http://blog.api/theme/" + id)
+        fetch("http://blog.api/theme/" + id, {
+            method: "POST",
+            body: JSON.stringify({ with: ['article'] })
+        })
             .then(resp => resp.json())
             .then(json => {
                 setTheme(json);
             });
     }, [id])
 
-    return (
-        <div>
-            <h1>Détail du mot-clé : {theme?.title}</h1>
+    return (<>
+        <div className='mb-5'>
+            <h1>Détail du thème : {theme?.title}</h1>
+            <img src={theme?.img_src} alt={theme?.title} />
         </div>
+
+        <h3>Liste des articles</h3>
+        {theme?.articles_list.map(article => {
+            return (
+                <div key={article?.Id_article}>
+                    <div><b>{article?.title}</b> <em>Publié le {new Date(article.created_at).toLocaleString()}</em></div>
+                </div>
+            );
+        })}
+    </>
     );
 }
 

@@ -16,7 +16,10 @@ function ArticleScreen() {
 
     const [articles, setArticles] = useState([]);
     useEffect(() => {
-        fetch("http://blog.api/article")
+        fetch("http://blog.api/article/" + 0, {
+            method: "POST",
+            body: JSON.stringify({with: ['appuser', 'theme']})
+        })
             .then(resp => resp.json())
             .then(json => {
                 json = json.sort((a,b) => {
@@ -31,12 +34,21 @@ function ArticleScreen() {
     return (<>
         <h1>Liste des articles</h1>
         <table>
+        <thead>
+            <tr>
+                <th>Titre</th>
+                <th>Date de publication</th>
+                <th>Auteur</th>
+                <th>Thème</th>
+            </tr>
+        </thead>
             <tbody>
                 {articles.map(article => {
                     return (<tr key={article.Id_article} onClick={() => { navigate(`/article/${article.Id_article}`); }}>
                         <td>{article.title}</td>
-                        <td>{article.content}</td>
                         <td>{dateConverter(article.created_at)}</td>
+                        <td>{article?.appuser?.pseudo}</td>
+                        <td>{article?.theme?.title}</td>
                     </tr>);
                 })}
             </tbody>

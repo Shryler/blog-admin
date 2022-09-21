@@ -7,7 +7,10 @@ function ArticleDetailScreen() {
     const [article, setArticle] = useState(null);
 
     useEffect(() => {
-        fetch("http://blog.api/article/" + id)
+        fetch("http://blog.api/article/" + id, {
+            method: "POST",
+            body: JSON.stringify({with: ['appuser', 'theme']})
+        })
             .then(resp => resp.json())
             .then(json => {
                 setArticle(json);
@@ -27,10 +30,11 @@ function ArticleDetailScreen() {
 
     return (
         <div>
-            <h1>Détail du mot-clé : {article?.title}</h1>
+            <h1>Détail de l'article : {article?.title}</h1>
             <div className='container'>
                 <p>{article?.content}</p>
-                <em>Publié le : {dateConverter(article?.created_at)}</em>
+                <em>Publié le : {dateConverter(article?.created_at)}</em> par <b>{article?.appuser?.pseudo}</b>
+                <p>Thème : {article?.theme?.title}</p>
             </div>
         </div>
     );
