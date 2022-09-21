@@ -19,12 +19,12 @@ function ThemeScreen() {
 
     return (<>
         <h1>Liste des thèmes</h1>
-        <table>
-            <tbody>
+        <table >
+            <tbody className="d-flex flex-wrap">
                 {themes.map(theme => {
                     return (<tr key={theme.Id_theme} onClick={() => { navigate(`/theme/${theme.Id_theme}`);}}>
                         <td>{theme.title}</td>
-                        <td>{theme.img_src}</td>
+                        <img src={theme.img_src} alt={theme.title} className="img-thumbnail"/>
                         <td></td>
                     </tr>);
                 })}
