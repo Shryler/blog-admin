@@ -18,7 +18,12 @@ function ArticleScreen() {
     useEffect(() => {
         fetch("http://blog.api/article")
             .then(resp => resp.json())
-            .then(json => setArticles(json.reverse()));
+            .then(json => {
+                json = json.sort((a,b) => {
+                    return new Date(b.created_at) - new Date(a.created_at)
+                });
+                setArticles(json);
+            });
     }, [])
 
     const navigate = useNavigate();
@@ -32,7 +37,6 @@ function ArticleScreen() {
                         <td>{article.title}</td>
                         <td>{article.content}</td>
                         <td>{dateConverter(article.created_at)}</td>
-                        <td></td>
                     </tr>);
                 })}
             </tbody>
