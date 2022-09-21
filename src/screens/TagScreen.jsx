@@ -24,7 +24,6 @@ function TagScreen() {
                 {tags.map(tag => {
                     return (<tr key={tag.Id_tag} onClick={() => { navigate(`/tag/${tag.Id_tag}`); }}>
                         <td>{tag.title}</td>
-                        <td></td>
                     </tr>);
                 })}
             </tbody>
