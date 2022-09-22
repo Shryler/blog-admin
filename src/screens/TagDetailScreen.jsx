@@ -25,7 +25,7 @@ function TagDetailScreen() {
                 {
                     tag?.articles_list.map(article => {
                         return (
-                                <p><strong>{article?.title}</strong> - <span>Publié le : {article.created_at}</span></p>
+                                <p key={article.Id_article}><strong>{article?.title}</strong> - <span>Publié le : {article.created_at}</span></p>
                             )
                     })
                 }

@@ -7,15 +7,12 @@ function ThemeDetailScreen() {
     const [theme, setTheme] = useState(null);
 
     useEffect(() => {
-        fetch("http://blog.api/theme/" + id, {
-            method: "POST",
-            body: JSON.stringify({ with: ['article'] })
-        })
+        fetch("http://blog.api/themeDetail/"+id)
             .then(resp => resp.json())
             .then(json => {
                 setTheme(json);
             });
-    }, [id])
+    }, [id]);
 
     return (<>
         <div className='mb-5'>
@@ -27,7 +24,8 @@ function ThemeDetailScreen() {
         {theme?.articles_list.map(article => {
             return (
                 <div key={article?.Id_article}>
-                    <div><b>{article?.title}</b> <em>Publié le {new Date(article.created_at).toLocaleString()}</em></div>
+                    <div><b>{article?.title}</b> <em>Publié le {new Date(article.created_at).toLocaleString()}</em>
+                <span className="ms-2">par {article?.appuser?.pseudo}</span></div>
                 </div>
             );
         })}

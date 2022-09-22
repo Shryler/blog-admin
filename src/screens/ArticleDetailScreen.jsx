@@ -35,7 +35,7 @@ function ArticleDetailScreen() {
                 <div><b>Mots-clés :</b> 
                     {
                         article?.tags_list.map(tag => {
-                            return <span className="badge bg-secondary ms-2">{tag.title}</span>;
+                            return <span key={tag.Id_tag} className="badge bg-secondary ms-2">{tag.title}</span>;
                         })
                     }
                 </div><br />
