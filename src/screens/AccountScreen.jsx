@@ -6,7 +6,7 @@ function AccountScreen() {
     const [appUsers, setappUsers] = useState([]);
 
     useEffect(() => {
-        fetch("http://blog.api/appuser/" + 0, {
+        fetch("http://blog.api/appuser/0", {
             method: "POST",
             body: JSON.stringify({ with: ['account', 'role'] })
         })

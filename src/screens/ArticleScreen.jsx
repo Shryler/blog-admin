@@ -15,10 +15,11 @@ function ArticleScreen() {
     }
 
     const [articles, setArticles] = useState([]);
+    
     useEffect(() => {
-        fetch("http://blog.api/article/" + 0, {
+        fetch("http://blog.api/article/0", {
             method: "POST",
-            body: JSON.stringify({with: ['appuser', 'theme', 'image']})
+            body: JSON.stringify({with: ['appuser', 'theme']})
         })
             .then(resp => resp.json())
             .then(json => {
