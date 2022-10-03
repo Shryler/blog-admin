@@ -2,46 +2,45 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function AccountScreen() {
-
-    const [appUsers, setappUsers] = useState([]);
+    const [users, setUsers] = useState([]);
 
     useEffect(() => {
         fetch("http://blog.api/appuser/0", {
             method: "POST",
-            body: JSON.stringify({ with: ['account', 'role'] })
+            body: JSON.stringify({with:['account','role']})
         })
-            .then(resp => resp.json())
-            .then(json => {
-                json = json.sort((a, b) => {
-                    return a.pseudo.toLowerCase() > b.pseudo.toLowerCase() ? 1 : -1
-                });
-                setappUsers(json);
-            });
+        .then(resp => resp.json())
+        .then(json => { 
+            setUsers(json)
+        });
+
     }, [])
 
     const navigate = useNavigate();
 
-    return (<>
+    return ( <>
         <h1>Liste des comptes utilisateurs</h1>
-        <table>
+        <table className="table table-striped">
             <thead>
                 <tr>
-                    <th>Pseudo</th>
-                    <th>Email</th>
-                    <th>Rôle</th>
+                    <th scope="col">pseudo</th>
+                    <th scope="col">email</th>
+                    <th scope="col">role</th>
+                    <th scope="col">actions</th>
                 </tr>
             </thead>
             <tbody>
-                {appUsers.map(appUser => {
-                    return (<tr key={appUser?.Id_appUser} onClick={() => { navigate(`/account/${appUser?.Id_appUser}`); }}>
-                        <td>{appUser?.pseudo}</td>
-                        <td>{appUser?.account?.login}</td>
-                        <td>{appUser?.role?.title}</td>
+                {users.map(user => {
+                    return(<tr key={user.Id_appUser} onClick={()=>{navigate(`/account/${user.Id_appUser}`);}}>
+                        <td>{user.pseudo}</td>
+                        <td>{user.account?.login}</td>
+                        <td>{user.role?.title}</td>
+                        <td></td>
                     </tr>);
                 })}
             </tbody>
         </table>
-    </>);
+    </> );
 }
 
 export default AccountScreen;

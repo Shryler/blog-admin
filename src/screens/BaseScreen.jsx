@@ -5,6 +5,7 @@ import Footer from "../components/layouts/Footer"
 const BaseScreen = () => {
   return (
     <div className="container-fluid">
+      
       <NavBar/>
       <main className="main">
         <Outlet />

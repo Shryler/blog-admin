@@ -1,60 +1,52 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 function ArticleDetailScreen() {
 
-    const { id } = useParams();
+    const {id} = useParams();
     const [article, setArticle] = useState(null);
 
     useEffect(() => {
-        fetch("http://blog.api/article/" + id, {
-            method: "POST",
-            body: JSON.stringify({ with: ['appuser', 'theme', 'image', 'comment', { tag: "article_tag" }] })
-        })
+        fetch("http://blog.api/article/"+id, {
+                method: "POST",
+                body: JSON.stringify({with: ['appuser','theme', 'image', 'comment', {tag: "article_tag"}]})
+            })
             .then(resp => resp.json())
-            .then(json => {
-                setArticle(json);
+            .then(json => { 
+                setArticle(json)
             });
-    }, [id])
 
-    function dateConverter(date) {
-        let newDate = new Date(date).toLocaleDateString("fr-FR", {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-            hour: "numeric",
-            minute: "numeric",
-        });
-        return newDate;
-    }
+    }, [id]);
 
-    return (
-        <div>
-            <h1>Détail de l'article : {article?.title}</h1>
-            <div className='container'>
-                <div><b>Mots-clés :</b> 
-                    {
-                        article?.tags_list.map(tag => {
-                            return <span key={tag.Id_tag} className="badge bg-secondary ms-2">{tag.title}</span>;
-                        })
-                    }
-                </div><br />
-                <p>{article?.content}</p>
-                <em>Publié le : {dateConverter(article?.created_at)}</em> par <b>{article?.appuser?.pseudo}</b>
-                <p>Thème : {article?.theme?.title}</p>
-                <img src={article?.image?.src} alt={article?.image?.src} />
-                <h3>Commentaires</h3>
-                {article?.comments_list.map(comment => {
-                    return (
-                        <div key={comment.Id_comment} className="commentaire">
-                            <p>{comment.title}</p>
-                            <em>Publié le {new Date(comment.created_at).toLocaleString()}</em>
-                        </div>
-                    );
-                })}
-            </div>
+    return ( <>
+        <h1>Détail de l'article : {article?.title}</h1>
+        <span>publié le : {new Date(article?.created_at).toLocaleString()}</span>
+        <span className="ms-3">par : {article?.author?.pseudo}</span>
+        <div>Thème : {article?.theme?.title}</div>
+        <div>Mots-clés : 
+            {
+                article?.tags_list.map(tag => {
+                    return <span className="badge bg-secondary ms-2">{tag.title}</span>;
+                })
+            }
         </div>
-    );
+        <br/>
+        <textarea disabled style={{width:'100%', resize: 'none'}} rows="6" defaultValue={article?.content}></textarea>
+        {article?.images_list.map(image => {
+            return <img src={image.src} alt={image.alt} style={{width:'200px'}} className="me-1"/>
+        })}
+        <br/><br/>
+        <h4>Commentaires</h4>
+        {article?.comments_list.map(comment => {
+            return (
+                <div>
+                    <span>{comment.title}</span> le :{new Date(comment.created_at).toLocaleString()} <br/>
+                    <textarea disabled style={{width:'60%', resize: 'none'}} rows="4" defaultValue={comment.content}></textarea>
+                </div>)
+            
+        })}
+
+    </> );
 }
 
 export default ArticleDetailScreen;

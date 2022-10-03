@@ -19,16 +19,16 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<BaseScreen />}>
-          <Route index element={<LandingScreen />} />
-          <Route path="/login" element={<LoginScreen />} />
-          <Route path="/accounts" element={<AccountScreen />} />
-          <Route path="/account/:id" element={<AccountDetailScreen />} />
-          <Route path="/articles" element={<ArticleScreen />} />
-          <Route path="/article/:id" element={<ArticleDetailScreen />} />
-          <Route path="/themes" element={<ThemeScreen />} />
-          <Route path="/theme/:id" element={<ThemeDetailScreen />} />
-          <Route path="/tags" element={<TagScreen />} />
-          <Route path="/tag/:id" element={<TagDetailScreen />} />
+          <Route index element={<LandingScreen/>} />
+          <Route path="/login" element={<LoginScreen/>} />
+          <Route path="/accounts" element={<AccountScreen/>} />
+          <Route path="/account/:id" element={<AccountDetailScreen/>} />
+          <Route path="/articles" element={<ArticleScreen/>} />
+          <Route path="/article/:id" element={<ArticleDetailScreen/>} />
+          <Route path="/themes" element={<ThemeScreen/>} />
+          <Route path="/theme/:id" element={<ThemeDetailScreen/>} />
+          <Route path="/tags" element={<TagScreen/>} />
+          <Route path="/tag/:id" element={<TagDetailScreen/>} />
           <Route path="*" element={<h1>404 not found</h1>} />
         </Route>
       </Routes>
